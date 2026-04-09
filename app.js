@@ -4,26 +4,31 @@ const SUPPORTED_LANGUAGES = ["en", "tr"];
 const I18N = {
   en: {
     navAbout: "About",
+    navExperience: "Experience",
     navProjects: "Projects",
     navContact: "Contact",
     heroEyebrow: "Portfolio",
-    heroLede: "Welcome to my portfolio. My name is Berk Unsal, and I am a computer engineer. I have a passion for software development and a strong background in computer engineering. This portfolio showcases my projects, skills, and experience in the field. Feel free to explore and learn more about my work.",
+    heroLede: "Computer Engineering student focused on cloud-native systems and backend development. I build scalable, fault-tolerant infrastructure with Kubernetes, OpenStack, and CI/CD pipelines.",
     heroViewProjects: "View projects",
     heroContact: "Contact",
     aboutEyebrow: "About",
-    aboutHeading: "Intentional, focused, and built around scalable systems.",
-    aboutCard1Title: "Cloud Specialization",
-    aboutCard1Body: "Throughout my academic journey, I have developed a strong focus on cloud computing, gaining expertise in designing and managing cloud-based solutions.",
-    aboutCard2Title: "Backend Development",
-    aboutCard2Body: "I have a solid foundation in backend development, with experience in building scalable and efficient server-side applications using various programming languages and frameworks.",
-    aboutCard3Title: "DevOps Path",
-    aboutCard3Body: "I am actively pursuing a career in DevOps, where I can leverage my skills in cloud computing and backend development to streamline software delivery and infrastructure management processes.",
+    aboutHeading: "Cloud engineering and backend delivery, grounded in production practice.",
+    aboutCard1Title: "Cloud and Platform",
+    aboutCard1Body: "Hands-on with Kubernetes, OpenStack, Docker, and AWS EC2 to design and operate resilient systems.",
+    aboutCard2Title: "Backend Engineering",
+    aboutCard2Body: "Building RESTful APIs with Python, improving latency with Redis, and maintaining reliable SQL-backed services.",
+    aboutCard3Title: "Delivery and Tooling",
+    aboutCard3Body: "Automating releases with GitHub Actions and standardizing infrastructure workflows across Dev, Test, and Production.",
+    experienceEyebrow: "Experience",
+    experienceHeading: "Internships with measurable backend and cloud impact.",
+    experienceBadge: "Internship",
+    experienceHighlightsTitle: "Highlights",
     projectsEyebrow: "Projects",
-    projectsHeading: "GitHub Repositories, showcased.",
-    projectsNote: "Open source projects that I contributed to or created.",
+    projectsHeading: "Selected projects and open-source work.",
+    projectsNote: "A focused set of repositories aligned with cloud, backend, and platform engineering.",
     contactEyebrow: "Contact",
-    contactHeading: "Built around GitHub presence.",
-    contactBody: "I hope to expand these projects, also there are more in my GitHub profile. Connect with me from the icons down below.",
+    contactHeading: "Open to cloud and backend opportunities.",
+    contactBody: "You can review my repositories and connect with me through the social links below.",
     backToTop: "Back to top",
     footerCopy: "Connect with me",
     showcaseBadge: "Showcase project",
@@ -39,30 +44,35 @@ const I18N = {
       repo: "repo",
     },
     pageTitle: "Berk | Portfolio",
-    pageDescription: "Minimalist portfolio showcasing GitHub projects in an Apple-inspired layout.",
+    pageDescription: "Minimalist portfolio focused on cloud engineering, backend work, and selected GitHub projects.",
   },
   tr: {
     navAbout: "Hakkımda",
+    navExperience: "Deneyim",
     navProjects: "Projeler",
     navContact: "İletişim",
     heroEyebrow: "Portföy",
-    heroLede: "Portföyüme hoş geldiniz. Ben Berk Ünsal, bilgisayar mühendisiyim. Yazılım geliştirmeye büyük ilgi duyuyor ve bilgisayar mühendisliği alanında güçlü bir altyapıya sahibim. Bu portföy; projelerimi, yeteneklerimi ve deneyimlerimi sergiler. İnceleyebilir ve çalışmalarım hakkında daha fazla bilgi edinebilirsiniz.",
+    heroLede: "Bulut-yerel sistemler ve backend geliştirme odaklı bir Bilgisayar Mühendisliği öğrencisiyim. Kubernetes, OpenStack ve CI/CD hatlarıyla ölçeklenebilir, hataya dayanıklı altyapılar geliştiriyorum.",
     heroViewProjects: "Projeleri gör",
     heroContact: "İletişim",
     aboutEyebrow: "Hakkımda",
-    aboutHeading: "Amaç odaklı, net ve ölçeklenebilir sistemler üzerine kurulu.",
-    aboutCard1Title: "Bulut Uzmanlığı",
-    aboutCard1Body: "Akademik yolculuğum boyunca bulut bilişim alanına güçlü bir odak geliştirdim; bulut tabanlı çözümlerin tasarımı ve yönetimi konusunda deneyim kazandım.",
-    aboutCard2Title: "Backend Geliştirme",
-    aboutCard2Body: "Farklı diller ve frameworklerle ölçeklenebilir ve verimli sunucu tarafı uygulamalar geliştirme konusunda sağlam bir backend altyapısına sahibim.",
-    aboutCard3Title: "DevOps Yolu",
-    aboutCard3Body: "Bulut ve backend yetkinliklerimi yazılım dağıtımını ve altyapı yönetimini iyileştirmek için kullanabileceğim bir DevOps kariyerini aktif olarak hedefliyorum.",
+    aboutHeading: "Üretim pratiğiyle şekillenen bulut mühendisliği ve backend teslimatı.",
+    aboutCard1Title: "Bulut ve Platform",
+    aboutCard1Body: "Kubernetes, OpenStack, Docker ve AWS EC2 ile dayanıklı sistemler tasarlayıp işletme deneyimi.",
+    aboutCard2Title: "Backend Mühendisliği",
+    aboutCard2Body: "Python ile RESTful API geliştirme, Redis ile gecikme azaltma ve SQL tabanlı servislerin güvenilir şekilde sürdürülmesi.",
+    aboutCard3Title: "Teslimat ve Araçlar",
+    aboutCard3Body: "GitHub Actions ile sürüm süreçlerini otomatikleştirme ve Dev, Test, Production akışlarında standart altyapı süreçleri kurma.",
+    experienceEyebrow: "Deneyim",
+    experienceHeading: "Backend ve bulut alanında ölçülebilir etki oluşturan stajlar.",
+    experienceBadge: "Staj",
+    experienceHighlightsTitle: "Öne çıkanlar",
     projectsEyebrow: "Projeler",
-    projectsHeading: "GitHub depoları, vitrin halinde.",
-    projectsNote: "Katkıda bulunduğum veya geliştirdiğim açık kaynak projeler.",
+    projectsHeading: "Seçili projeler ve açık kaynak katkıları.",
+    projectsNote: "Bulut, backend ve platform mühendisliği odağıyla seçilmiş depolar.",
     contactEyebrow: "İletişim",
-    contactHeading: "GitHub varlığı etrafında şekillendi.",
-    contactBody: "Bu projeleri daha da büyütmeyi hedefliyorum. GitHub profilimde daha fazlası var. Aşağıdaki ikonlardan bana ulaşabilirsiniz.",
+    contactHeading: "Bulut ve backend fırsatlarına açığım.",
+    contactBody: "Depolarımı inceleyebilir ve aşağıdaki sosyal bağlantılardan bana ulaşabilirsiniz.",
     backToTop: "Yukarıya dön",
     footerCopy: "Bana ulaşın",
     showcaseBadge: "Vitrin projesi",
@@ -78,7 +88,7 @@ const I18N = {
       repo: "repo",
     },
     pageTitle: "Berk | Portföy",
-    pageDescription: "Apple esintili minimal bir tasarımla GitHub projelerini sergileyen portföy sitesi.",
+    pageDescription: "Bulut mühendisliği, backend çalışmaları ve seçili GitHub projelerine odaklanan minimal portföy sitesi.",
   },
 };
 
@@ -86,8 +96,8 @@ const SHOWCASE_PROJECTS = [
   {
     name: "OpsCommand",
     description: {
-      en: "Operational command workflows presented with a minimal, premium interface.",
-      tr: "Operasyonel komut akışlarını minimal ve premium bir arayüzle sunar.",
+      en: "Collaborative DevOps and Kubernetes management platform with real-time operational workflows.",
+      tr: "Gerçek zamanlı operasyon akışları sunan iş birlikçi DevOps ve Kubernetes yönetim platformu.",
     },
     thumbnail: "assets/opscommand.png",
     labels: {
@@ -95,12 +105,12 @@ const SHOWCASE_PROJECTS = [
       tr: ["DevOps", "Kubernetes", "CLI"],
     },
     role: {
-      en: "Architect + Backend",
-      tr: "Mimar + Backend",
+      en: "Full-stack Architect",
+      tr: "Full-stack Mimar",
     },
     outcome: {
-      en: "Command-centered operations workflow",
-      tr: "Komut merkezli operasyon akışı",
+      en: "Ops terminal and collaborative cluster operations",
+      tr: "Operasyon terminali ve iş birlikçi küme yönetimi",
     },
     language: "JavaScript",
     updatedAt: "2026-04-01",
@@ -110,8 +120,8 @@ const SHOWCASE_PROJECTS = [
   {
     name: "Python Algorithmic Trading Bot",
     description: {
-      en: "Automated trading experiments and signal logic built in Python.",
-      tr: "Python ile geliştirilmiş otomatik işlem denemeleri ve sinyal mantığı.",
+      en: "Python-based algorithmic trading experimentation focused on strategy logic and automation.",
+      tr: "Strateji mantığı ve otomasyona odaklanan Python tabanlı algoritmik işlem denemeleri.",
     },
     thumbnail: "assets/python-algorithmic-trading.png",
     labels: {
@@ -119,12 +129,12 @@ const SHOWCASE_PROJECTS = [
       tr: ["Alım-Satım", "Geri Test", "Otomasyon"],
     },
     role: {
-      en: "Quant Dev + Python Engineer",
-      tr: "Kuant Geliştirici + Python Mühendisi",
+      en: "Python Engineer",
+      tr: "Python Mühendisi",
     },
     outcome: {
-      en: "Backtesting and live paper-trading pipeline",
-      tr: "Geri test ve canlı paper-trading hattı",
+      en: "Automated signal and strategy testing workflow",
+      tr: "Otomatik sinyal ve strateji test akışı",
     },
     language: "Python",
     updatedAt: "2025-11-01",
@@ -134,8 +144,8 @@ const SHOWCASE_PROJECTS = [
   {
     name: "crossview",
     description: {
-      en: "Crossplane ecosystem exploration with a compact, developer-friendly view.",
-      tr: "Crossplane ekosistemini kompakt ve geliştirici dostu bir görünümle inceleme.",
+      en: "Open-source contribution to Crossplane ecosystem, improving server-side search and test coverage.",
+      tr: "Crossplane ekosistemine sunucu tarafı arama ve test kapsamını iyileştiren açık kaynak katkısı.",
     },
     thumbnail: "assets/crossview.png",
     labels: {
@@ -144,11 +154,11 @@ const SHOWCASE_PROJECTS = [
     },
     role: {
       en: "Open-source Contributor",
-      tr: "Açık kaynak katkı sağlayıcı",
+      tr: "Açık Kaynak Katkıcısı",
     },
     outcome: {
-      en: "Platform visibility and operability enhancements",
-      tr: "Platform görünürlüğü ve işletilebilirlik iyileştirmeleri",
+      en: "Included in v3.8.0-rc.4 release scope",
+      tr: "v3.8.0-rc.4 sürüm kapsamına dahil edildi",
     },
     language: "JavaScript",
     updatedAt: "2026-04-01",
@@ -158,8 +168,8 @@ const SHOWCASE_PROJECTS = [
   {
     name: "url health sentinel",
     description: {
-      en: "A lightweight monitoring project for checking URL availability and health.",
-      tr: "URL erişilebilirliğini ve sağlığını kontrol eden hafif bir izleme projesi.",
+      en: "A lightweight monitoring project for URL availability and health checks.",
+      tr: "URL erişilebilirliği ve sağlık kontrolleri için hafif bir izleme projesi.",
     },
     thumbnail: "assets/url-health-sentinel.png",
     labels: {
@@ -167,12 +177,12 @@ const SHOWCASE_PROJECTS = [
       tr: ["İzleme", "Çalışma Süresi", "Web"],
     },
     role: {
-      en: "Full-stack Builder",
-      tr: "Full-stack geliştirici",
+      en: "Builder",
+      tr: "Geliştirici",
     },
     outcome: {
-      en: "Simple endpoint health signal dashboard",
-      tr: "Basit endpoint sağlık sinyali paneli",
+      en: "Simple endpoint health status visibility",
+      tr: "Basit endpoint sağlık görünürlüğü",
     },
     language: "HTML",
     updatedAt: "2026-02-01",
@@ -181,7 +191,57 @@ const SHOWCASE_PROJECTS = [
   },
 ];
 
+const EXPERIENCE_ITEMS = [
+  {
+    role: {
+      en: "Cloud Engineering Intern",
+      tr: "Bulut Mühendisliği Stajyeri",
+    },
+    company: "Better Life Communication",
+    period: {
+      en: "Jan 2026 - Feb 2026",
+      tr: "Oca 2026 - Şub 2026",
+    },
+    highlights: {
+      en: [
+        "Standardized IP address management and device documentation with NetBox for a 5-server cluster.",
+        "Architected a private cloud environment with OpenStack across 3 hypervisors and 7 virtual machines.",
+        "Engineered Docker deployments across Dev, Test, and Production, improving uptime to 99.3%.",
+      ],
+      tr: [
+        "5 sunuculu kümede NetBox ile IP adres yönetimi ve cihaz dokümantasyonunu standartlaştırdı.",
+        "OpenStack kullanarak 3 hypervisor ve 7 sanal makineden oluşan özel bulut ortamını tasarladı.",
+        "Dev, Test ve Production ortamlarında Docker dağıtımlarıyla çalışma süresini %99,3 seviyesine çıkardı.",
+      ],
+    },
+  },
+  {
+    role: {
+      en: "Backend Engineering Intern",
+      tr: "Backend Mühendisliği Stajyeri",
+    },
+    company: "Tüzün Kardeşler A.Ş.",
+    period: {
+      en: "Jun 2024 - Sep 2024",
+      tr: "Haz 2024 - Eyl 2024",
+    },
+    highlights: {
+      en: [
+        "Developed and maintained 10+ RESTful API endpoints with Python and Dockerized deployments across environments.",
+        "Automated backend delivery with GitHub Actions, reducing manual release time by 40%.",
+        "Implemented Redis caching for frequently accessed data, reducing API latency by 30%.",
+      ],
+      tr: [
+        "Python ile 10+ RESTful API endpointi geliştirdi ve Docker ile ortamlar arası tutarlı dağıtım sağladı.",
+        "GitHub Actions ile backend teslimat sürecini otomatikleştirerek manuel yayın süresini %40 azalttı.",
+        "Sık erişilen veriler için Redis önbelleklemesi uygulayarak API gecikmesini %30 düşürdü.",
+      ],
+    },
+  },
+];
+
 const projectsGrid = document.getElementById("projects-grid");
+const experienceGrid = document.getElementById("experience-grid");
 let revealObserver = null;
 let currentLanguage = "en";
 
@@ -231,6 +291,7 @@ function applyStaticTranslations() {
   };
 
   setText("nav-about", t("navAbout"));
+  setText("nav-experience", t("navExperience"));
   setText("nav-projects", t("navProjects"));
   setText("nav-contact", t("navContact"));
   setText("hero-eyebrow", t("heroEyebrow"));
@@ -245,6 +306,8 @@ function applyStaticTranslations() {
   setText("about-card-2-body", t("aboutCard2Body"));
   setText("about-card-3-title", t("aboutCard3Title"));
   setText("about-card-3-body", t("aboutCard3Body"));
+  setText("experience-eyebrow", t("experienceEyebrow"));
+  setText("experience-heading", t("experienceHeading"));
   setText("projects-eyebrow", t("projectsEyebrow"));
   setText("projects-heading", t("projectsHeading"));
   setText("projects-note", t("projectsNote"));
@@ -331,6 +394,46 @@ function buildProjectCard(project, index) {
   return card;
 }
 
+function buildExperienceCard(item, index) {
+  const card = document.createElement("article");
+  card.className = "experience-card glass reveal";
+  card.style.setProperty("--reveal-delay", `${index * 120}ms`);
+
+  const header = document.createElement("div");
+  header.className = "experience-header";
+
+  appendTextElement(header, "p", "experience-badge", t("experienceBadge"));
+  appendTextElement(header, "h3", "experience-title", getLocalizedField(item.role));
+  appendTextElement(header, "p", "experience-company", item.company);
+  appendTextElement(header, "p", "experience-period", getLocalizedField(item.period));
+
+  const highlightsTitle = appendTextElement(card, "p", "experience-highlights-title", t("experienceHighlightsTitle"));
+  const highlights = document.createElement("ul");
+  highlights.className = "experience-highlights";
+
+  const items = getLocalizedField(item.highlights);
+  (Array.isArray(items) ? items : []).forEach((highlight) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = highlight;
+    highlights.appendChild(listItem);
+  });
+
+  card.append(header, highlightsTitle, highlights);
+
+  return card;
+}
+
+function loadExperienceEntries() {
+  if (!experienceGrid) {
+    return;
+  }
+
+  experienceGrid.innerHTML = "";
+  EXPERIENCE_ITEMS.forEach((item, index) => {
+    experienceGrid.appendChild(buildExperienceCard(item, index));
+  });
+}
+
 function loadShowcaseProjects() {
   projectsGrid.innerHTML = "";
 
@@ -344,7 +447,9 @@ function loadShowcaseProjects() {
 function setLanguage(nextLanguage, persist = true) {
   currentLanguage = SUPPORTED_LANGUAGES.includes(nextLanguage) ? nextLanguage : "en";
   applyStaticTranslations();
+  window.dispatchEvent(new Event("languagechange"));
   updateLanguageControls();
+  loadExperienceEntries();
   loadShowcaseProjects();
 
   if (persist) {
@@ -378,20 +483,89 @@ function initLanguageSwitcher() {
 }
 
 function initSectionNavState() {
+  const nav = document.querySelector(".nav");
   const navLinks = Array.from(document.querySelectorAll(".nav-link"));
   const sections = Array.from(document.querySelectorAll("main section[id]"));
 
-  if (!navLinks.length || !sections.length) {
+  if (!nav || !navLinks.length || !sections.length) {
     return;
+  }
+
+  let indicator = nav.querySelector(".nav-indicator");
+  if (!indicator) {
+    indicator = document.createElement("span");
+    indicator.className = "nav-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    nav.prepend(indicator);
   }
 
   const sectionVisibility = new Map(sections.map((section) => [section.id, 0]));
 
+  const readCssNumber = (name, fallback) => {
+    const value = Number.parseFloat(window.getComputedStyle(nav).getPropertyValue(name));
+    return Number.isFinite(value) ? value : fallback;
+  };
+
+  const getActiveLink = () => navLinks.find((link) => link.classList.contains("is-current"));
+
+  const moveIndicator = (link, immediate = false) => {
+    if (!(link instanceof HTMLElement)) {
+      indicator.classList.remove("is-visible");
+      return;
+    }
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const centerX = linkRect.left - navRect.left + linkRect.width / 2;
+    const centerY = linkRect.top - navRect.top + linkRect.height / 2;
+    const bleedX = readCssNumber("--nav-indicator-bleed-x", 9);
+    const bleedY = readCssNumber("--nav-indicator-bleed-y", 5);
+    const minWidth = readCssNumber("--nav-indicator-min-width", 54);
+    const minHeight = readCssNumber("--nav-indicator-min-height", 38);
+    const width = Math.max(linkRect.width + (bleedX * 2), minWidth);
+    const height = Math.max(linkRect.height + (bleedY * 2), minHeight);
+
+    if (immediate) {
+      indicator.classList.add("is-instant");
+    } else {
+      indicator.classList.remove("is-instant");
+      indicator.classList.remove("is-switching");
+      // Restart keyframe animation each time the active section changes.
+      void indicator.offsetWidth;
+      indicator.classList.add("is-switching");
+    }
+
+    indicator.style.width = `${width}px`;
+    indicator.style.height = `${height}px`;
+    indicator.style.transform = `translate3d(${centerX}px, ${centerY}px, 0) translate(-50%, -50%)`;
+    indicator.classList.add("is-visible");
+  };
+
   const applyActiveLink = (sectionId) => {
+    let activeLink = null;
+
     navLinks.forEach((link) => {
       const isCurrent = link.getAttribute("href") === `#${sectionId}`;
       link.classList.toggle("is-current", isCurrent);
       link.setAttribute("aria-current", isCurrent ? "page" : "false");
+
+      if (isCurrent) {
+        activeLink = link;
+      }
+    });
+
+    moveIndicator(activeLink, false);
+  };
+
+  let alignRaf = 0;
+  const realignIndicator = (immediate = true) => {
+    if (alignRaf) {
+      window.cancelAnimationFrame(alignRaf);
+    }
+
+    alignRaf = window.requestAnimationFrame(() => {
+      moveIndicator(getActiveLink(), immediate);
+      alignRaf = 0;
     });
   };
 
@@ -423,6 +597,44 @@ function initSectionNavState() {
     applyActiveLink(initialHash);
   } else {
     applyActiveLink(sections[0].id);
+  }
+
+  window.addEventListener("resize", () => {
+    realignIndicator(true);
+  }, { passive: true });
+
+  window.addEventListener("languagechange", () => {
+    realignIndicator(true);
+  });
+
+  if (typeof ResizeObserver === "function") {
+    const resizeObserver = new ResizeObserver(() => {
+      realignIndicator(true);
+    });
+    resizeObserver.observe(nav);
+    navLinks.forEach((link) => resizeObserver.observe(link));
+  }
+
+  const textObserver = new MutationObserver(() => {
+    realignIndicator(true);
+  });
+
+  textObserver.observe(nav, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  });
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      realignIndicator(true);
+    }).catch(() => {});
+  }
+
+  if (document.fonts?.addEventListener) {
+    document.fonts.addEventListener("loadingdone", () => {
+      realignIndicator(true);
+    });
   }
 }
 
