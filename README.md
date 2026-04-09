@@ -1,12 +1,13 @@
 # Berk Website
 
-A minimalist portfolio site with an Apple-inspired visual language and a GitHub-driven projects section.
+A minimalist portfolio site with an Apple-inspired visual language, static project data, and custom interactive effects.
 
 ## How it works
 
-- The site is pinned to `Berk-Unsal` for now
-- It showcases `OpsCommand`, `Python-Algorithmic-Trading-Bot`, `crossview`, and `url-health-sentinel`
-- Each card fetches live repository metadata from GitHub when available
+- Project cards are rendered from `SHOWCASE_PROJECTS` in `app.js`
+- Each project supports `thumbnail`, `labels`, `role`, `outcome`, and `url`
+- The `View repo` button links directly to each configured repository URL
+- A liquid-glass custom cursor is enabled on desktop pointer devices
 
 ## Run locally
 

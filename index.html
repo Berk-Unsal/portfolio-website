@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Minimalist portfolio showcasing GitHub projects in an Apple-inspired layout." />
     <title>Berk | Portfolio</title>
+    <link rel="preload" as="image" href="assets/opscommand.png" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23111111'/%3E%3Cpath d='M18 44V20h10.2c7.1 0 11.3 3.8 11.3 9.5 0 5.8-4.2 9.5-11.3 9.5H26V44h-8Zm8-13h1.9c3.4 0 5.2-1.5 5.2-4.5s-1.8-4.5-5.2-4.5H26v9Z' fill='%23ffffff'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,18 +19,22 @@
     <header class="topbar">
       <a class="brand" href="#hero">Berk Ünsal</a>
       <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a class="nav-link" id="nav-about" href="#about">About</a>
+        <a class="nav-link" id="nav-projects" href="#projects">Projects</a>
+        <a class="nav-link" id="nav-contact" href="#contact">Contact</a>
       </nav>
+      <div class="language-switch" role="group" aria-label="Language switcher">
+        <button class="lang-btn" type="button" data-lang="en" aria-label="Switch to English">EN</button>
+        <button class="lang-btn" type="button" data-lang="tr" aria-label="Türkçeye geç">TR</button>
+      </div>
     </header>
 
     <main>
       <section class="hero section reveal" id="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Portfolio</p>
+          <p class="eyebrow" id="hero-eyebrow">Portfolio</p>
           <h1>Berk Ünsal</h1>
-          <p class="lede">
+          <p class="lede" id="hero-lede">
             Welcome to my portfolio,
             My name is Berk Ünsal, and I am a computer engineer.
              I have a passion for software development and a strong background in computer engineering. 
@@ -37,33 +42,33 @@
              Feel free to explore and learn more about my work.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#projects">View projects</a>
-            <a class="button button-secondary" href="#contact">Contact</a>
+            <a class="button button-primary" id="hero-view-projects" href="#projects">View projects</a>
+            <a class="button button-secondary" id="hero-contact" href="#contact">Contact</a>
           </div>
         </div>
       </section>
 
       <section class="section about reveal" id="about">
         <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h2>Intentional, focused, and built around scalable systems.</h2>
+          <p class="eyebrow" id="about-eyebrow">About</p>
+          <h2 id="about-heading">Intentional, focused, and built around scalable systems.</h2>
         </div>
         <div class="about-grid">
           <article class="about-card glass">
-            <h3>Cloud Specialization</h3>
-            <p>
+            <h3 id="about-card-1-title">Cloud Specialization</h3>
+            <p id="about-card-1-body">
               Throughout my academic journey, I have developed a strong focus on cloud computing, gaining expertise in designing and managing cloud-based solutions.
             </p>
           </article>
           <article class="about-card glass">
-            <h3>Backend Development</h3>
-            <p>
+            <h3 id="about-card-2-title">Backend Development</h3>
+            <p id="about-card-2-body">
                 I have a solid foundation in backend development, with experience in building scalable and efficient server-side applications using various programming languages and frameworks.
             </p>
           </article>
           <article class="about-card glass">
-            <h3>DevOps Path</h3>
-            <p>
+            <h3 id="about-card-3-title">DevOps Path</h3>
+            <p id="about-card-3-body">
                 I am actively pursuing a career in DevOps, where I can leverage my skills in cloud computing and backend development to streamline software delivery and infrastructure management processes.
             </p>
           </article>
@@ -73,8 +78,8 @@
       <section class="section projects reveal" id="projects">
         <div class="section-heading projects-heading">
           <div>
-            <p class="eyebrow">Projects</p>
-            <h2>GitHub Repositories, showcased.</h2>
+            <p class="eyebrow" id="projects-eyebrow">Projects</p>
+            <h2 id="projects-heading">GitHub Repositories, showcased.</h2>
           </div>
           <p class="projects-note" id="projects-note">Open source projects that I contributed to or created.</p>
         </div>
@@ -85,20 +90,20 @@
       <section class="section contact reveal" id="contact">
         <div class="contact-card glass">
           <div>
-            <p class="eyebrow">Contact</p>
-            <h2>Built around GitHub presence.</h2>
-            <p>
+            <p class="eyebrow" id="contact-eyebrow">Contact</p>
+            <h2 id="contact-heading">Built around GitHub presence.</h2>
+            <p id="contact-body">
               I hope to expand these projects, also there are more in my GitHub profile. Connect with me from the icons down below.
             </p>
           </div>
-          <a class="button button-primary" href="#hero">Back to top</a>
+          <a class="button button-primary" id="contact-back-to-top" href="#hero">Back to top</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer reveal" aria-label="Social links">
       <div class="footer-inner glass">
-        <p class="footer-copy">Connect with me</p>
+        <p class="footer-copy" id="footer-copy">Connect with me</p>
         <div class="social-links">
           <a class="social-link" href="https://www.instagram.com/unsaalberk" target="_blank" rel="noreferrer" aria-label="Instagram">
             <img src="icons/instagram.png" alt="Instagram" loading="lazy" />
