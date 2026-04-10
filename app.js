@@ -1,6 +1,21 @@
 const LANGUAGE_STORAGE_KEY = "siteLanguage";
 const SUPPORTED_LANGUAGES = ["en", "tr"];
 
+const SKILLS = [
+  { name: "aws", label: "AWS" },
+  { name: "bash", label: "Bash" },
+  { name: "docker", label: "Docker" },
+  { name: "git", label: "Git" },
+  { name: "javascript", label: "JavaScript" },
+  { name: "kubernetes", label: "Kubernetes" },
+  { name: "linux", label: "Linux" },
+  { name: "mongodb", label: "MongoDB" },
+  { name: "open-stack", label: "OpenStack" },
+  { name: "python", label: "Python" },
+  { name: "redis", label: "Redis" },
+  { name: "terraform", label: "Terraform" },
+];
+
 const I18N = {
   en: {
     navAbout: "About",
@@ -918,7 +933,47 @@ function initLiquidCursor() {
   });
 }
 
+function populateCarousel() {
+  const carousel = document.getElementById("skills-carousel");
+  if (!carousel) {
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  // Create carousel items twice for seamless infinite scroll
+  for (let iteration = 0; iteration < 2; iteration++) {
+    SKILLS.forEach((skill) => {
+      const item = document.createElement("div");
+      item.className = "skills-carousel-item";
+
+      const iconContainer = document.createElement("div");
+      iconContainer.className = "skills-carousel-icon";
+
+      const img = document.createElement("img");
+      img.src = `icons/skills/${skill.name}.png`;
+      img.alt = skill.label;
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      iconContainer.appendChild(img);
+
+      const label = document.createElement("div");
+      label.className = "skills-carousel-label";
+      label.textContent = skill.label;
+
+      item.appendChild(iconContainer);
+      item.appendChild(label);
+
+      fragment.appendChild(item);
+    });
+  }
+
+  carousel.appendChild(fragment);
+}
+
 function initApp() {
+  populateCarousel();
   initLanguageSwitcher();
   initSectionNavState();
   if (typeof window.requestIdleCallback === "function") {

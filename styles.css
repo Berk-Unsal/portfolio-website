@@ -549,6 +549,76 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.skills-carousel-container {
+  margin: 32px 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.skills-carousel-track {
+  display: flex;
+  gap: 24px;
+  padding: 28px 24px;
+  animation: scroll-carousel 60s linear infinite;
+  will-change: transform;
+}
+
+.skills-carousel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.skills-carousel-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 14px;
+  transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+
+.skills-carousel-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: opacity(0.9);
+}
+
+.skills-carousel-item:hover .skills-carousel-icon {
+  transform: translateY(-2px) scale(1.08);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.skills-carousel-label {
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-align: center;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+@keyframes scroll-carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .about-card,
 .contact-card,
 .project-card,
@@ -1002,6 +1072,34 @@ main {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .skills-carousel-container {
+    margin: 24px 0;
+    padding: 0 -16px;
+  }
+
+  .skills-carousel-track {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+
+  .skills-carousel-item {
+    min-width: 80px;
+  }
+
+  .skills-carousel-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .skills-carousel-icon img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .skills-carousel-label {
+    font-size: 0.7rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1052,7 +1150,8 @@ main {
 
   .hero-visual-lines span,
   .nav-progress-fill,
-  .project-image img {
+  .project-image img,
+  .skills-carousel-track {
     animation: none !important;
     transition: none !important;
     transform: none !important;
