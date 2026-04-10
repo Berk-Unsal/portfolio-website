@@ -4,12 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Minimalist portfolio focused on cloud engineering, backend work, and selected GitHub projects." />
+    <meta name="theme-color" content="#f5f5f2" />
     <title>Berk | Portfolio</title>
     <link rel="preload" as="image" href="assets/opscommand.png" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%23111111'/%3E%3Cpath d='M18 44V20h10.2c7.1 0 11.3 3.8 11.3 9.5 0 5.8-4.2 9.5-11.3 9.5H26V44h-8Zm8-13h1.9c3.4 0 5.2-1.5 5.2-4.5s-1.8-4.5-5.2-4.5H26v9Z' fill='%23ffffff'/%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    </noscript>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -19,6 +24,7 @@
     <header class="topbar">
       <a class="brand" href="#hero">Berk Ünsal</a>
       <nav class="nav">
+        <span class="nav-progress" aria-hidden="true"><span class="nav-progress-fill"></span></span>
         <a class="nav-link" id="nav-about" href="#about">About</a>
         <a class="nav-link" id="nav-experience" href="#experience">Experience</a>
         <a class="nav-link" id="nav-projects" href="#projects">Projects</a>
@@ -44,6 +50,23 @@
             <a class="button button-secondary" id="hero-contact" href="#contact">Contact</a>
           </div>
         </div>
+        <aside class="hero-visual glass" aria-hidden="true">
+          <div class="hero-visual-header">
+            <span></span><span></span><span></span>
+          </div>
+          <p class="hero-visual-title" id="hero-visual-title">profile.snapshot</p>
+          <div class="hero-visual-grid">
+            <p><strong id="hero-visual-focus-label">Focus:</strong> <span id="hero-visual-focus-value">Cloud Engineering</span></p>
+            <p><strong id="hero-visual-stack-label">Stack:</strong> <span id="hero-visual-stack-value">Kubernetes, OpenStack, Docker</span></p>
+            <p><strong id="hero-visual-location-label">Location:</strong> <span id="hero-visual-location-value">Turkey (Remote-friendly)</span></p>
+            <p><strong id="hero-visual-availability-label">Availability:</strong> <span id="hero-visual-availability-value">Open to internships and junior roles</span></p>
+          </div>
+          <div class="hero-visual-lines">
+            <span class="line-one"></span>
+            <span class="line-two"></span>
+            <span class="line-three"></span>
+          </div>
+        </aside>
       </section>
 
       <section class="section about reveal" id="about">
@@ -111,19 +134,19 @@
       <div class="footer-inner glass">
         <p class="footer-copy" id="footer-copy">Connect with me</p>
         <div class="social-links">
-          <a class="social-link" href="https://www.instagram.com/unsaalberk" target="_blank" rel="noreferrer" aria-label="Instagram">
-            <img src="icons/instagram.png" alt="Instagram" loading="lazy" />
+          <a class="social-link" href="https://www.instagram.com/unsaalberk" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="icons/instagram.png" alt="" loading="lazy" width="20" height="20" decoding="async" />
           </a>
-          <a class="social-link" href="https://www.linkedin.com/in/berkunsaltr/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-            <img src="icons/linkedin.png" alt="LinkedIn" loading="lazy" />
+          <a class="social-link" href="https://www.linkedin.com/in/berkunsaltr/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="icons/linkedin.png" alt="" loading="lazy" width="20" height="20" decoding="async" />
           </a>
-          <a class="social-link" href="https://github.com/Berk-Unsal" target="_blank" rel="noreferrer" aria-label="GitHub">
-            <img src="icons/github.png" alt="GitHub" loading="lazy" />
+          <a class="social-link" href="https://github.com/Berk-Unsal" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <img src="icons/github.png" alt="" loading="lazy" width="20" height="20" decoding="async" />
           </a>
         </div>
       </div>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
   </body>
 </html>

@@ -11,6 +11,15 @@ const I18N = {
     heroLede: "Computer Engineering student focused on cloud-native systems and backend development. I build scalable, fault-tolerant infrastructure with Kubernetes, OpenStack, and CI/CD pipelines.",
     heroViewProjects: "View projects",
     heroContact: "Contact",
+    heroVisualTitle: "profile.snapshot",
+    heroVisualFocusLabel: "Focus:",
+    heroVisualFocusValue: "Cloud Engineering",
+    heroVisualStackLabel: "Stack:",
+    heroVisualStackValue: "Kubernetes, OpenStack, Docker",
+    heroVisualLocationLabel: "Location:",
+    heroVisualLocationValue: "Turkey (Remote-friendly)",
+    heroVisualAvailabilityLabel: "Availability:",
+    heroVisualAvailabilityValue: "Open to internships and junior roles",
     aboutEyebrow: "About",
     aboutHeading: "Cloud engineering and backend delivery, grounded in production practice.",
     aboutCard1Title: "Cloud and Platform",
@@ -55,6 +64,15 @@ const I18N = {
     heroLede: "Bulut-yerel sistemler ve backend geliştirme odaklı bir Bilgisayar Mühendisliği öğrencisiyim. Kubernetes, OpenStack ve CI/CD hatlarıyla ölçeklenebilir, hataya dayanıklı altyapılar geliştiriyorum.",
     heroViewProjects: "Projeleri gör",
     heroContact: "İletişim",
+    heroVisualTitle: "profile.snapshot",
+    heroVisualFocusLabel: "Odak:",
+    heroVisualFocusValue: "Bulut Mühendisliği",
+    heroVisualStackLabel: "Yığın:",
+    heroVisualStackValue: "Kubernetes, OpenStack, Docker",
+    heroVisualLocationLabel: "Konum:",
+    heroVisualLocationValue: "Türkiye (Uzaktan çalışmaya uygun)",
+    heroVisualAvailabilityLabel: "Uygunluk:",
+    heroVisualAvailabilityValue: "Staj ve junior roller için açığım",
     aboutEyebrow: "Hakkımda",
     aboutHeading: "Üretim pratiğiyle şekillenen bulut mühendisliği ve backend teslimatı.",
     aboutCard1Title: "Bulut ve Platform",
@@ -244,6 +262,23 @@ const projectsGrid = document.getElementById("projects-grid");
 const experienceGrid = document.getElementById("experience-grid");
 let revealObserver = null;
 let currentLanguage = "en";
+const dateFormatterByLanguage = new Map();
+
+function getStoredValue(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function setStoredValue(key, value) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // Ignore storage failures (private mode or blocked storage).
+  }
+}
 
 function t(key) {
   return I18N[currentLanguage]?.[key] ?? I18N.en[key] ?? key;
@@ -258,9 +293,15 @@ function getLocalizedField(field) {
 
 function humanizeDate(value) {
   const date = new Date(value);
+  let formatter = dateFormatterByLanguage.get(currentLanguage);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(currentLanguage, { month: "short", year: "numeric" });
+    dateFormatterByLanguage.set(currentLanguage, formatter);
+  }
+
   return Number.isNaN(date.getTime())
     ? value
-    : new Intl.DateTimeFormat(currentLanguage, { month: "short", year: "numeric" }).format(date);
+    : formatter.format(date);
 }
 
 function appendTextElement(parent, tagName, className, text) {
@@ -298,6 +339,15 @@ function applyStaticTranslations() {
   setText("hero-lede", t("heroLede"));
   setText("hero-view-projects", t("heroViewProjects"));
   setText("hero-contact", t("heroContact"));
+  setText("hero-visual-title", t("heroVisualTitle"));
+  setText("hero-visual-focus-label", t("heroVisualFocusLabel"));
+  setText("hero-visual-focus-value", t("heroVisualFocusValue"));
+  setText("hero-visual-stack-label", t("heroVisualStackLabel"));
+  setText("hero-visual-stack-value", t("heroVisualStackValue"));
+  setText("hero-visual-location-label", t("heroVisualLocationLabel"));
+  setText("hero-visual-location-value", t("heroVisualLocationValue"));
+  setText("hero-visual-availability-label", t("heroVisualAvailabilityLabel"));
+  setText("hero-visual-availability-value", t("heroVisualAvailabilityValue"));
   setText("about-eyebrow", t("aboutEyebrow"));
   setText("about-heading", t("aboutHeading"));
   setText("about-card-1-title", t("aboutCard1Title"));
@@ -338,6 +388,8 @@ function buildProjectCard(project, index) {
     const thumbnail = document.createElement("img");
     thumbnail.src = project.thumbnail;
     thumbnail.alt = `${project.name} thumbnail`;
+    thumbnail.width = 1600;
+    thumbnail.height = 1000;
     thumbnail.loading = index === 0 ? "eager" : "lazy";
     thumbnail.fetchPriority = index === 0 ? "high" : "auto";
     thumbnail.decoding = "async";
@@ -429,23 +481,38 @@ function loadExperienceEntries() {
   }
 
   experienceGrid.innerHTML = "";
+  const fragment = document.createDocumentFragment();
   EXPERIENCE_ITEMS.forEach((item, index) => {
-    experienceGrid.appendChild(buildExperienceCard(item, index));
+    fragment.appendChild(buildExperienceCard(item, index));
   });
+  experienceGrid.appendChild(fragment);
 }
 
 function loadShowcaseProjects() {
+  if (!projectsGrid) {
+    return;
+  }
+
   projectsGrid.innerHTML = "";
+  const fragment = document.createDocumentFragment();
 
   SHOWCASE_PROJECTS.forEach((project, index) => {
-    projectsGrid.appendChild(buildProjectCard(project, index));
+    fragment.appendChild(buildProjectCard(project, index));
   });
+
+  projectsGrid.appendChild(fragment);
 
   observeReveals();
 }
 
-function setLanguage(nextLanguage, persist = true) {
-  currentLanguage = SUPPORTED_LANGUAGES.includes(nextLanguage) ? nextLanguage : "en";
+function setLanguage(nextLanguage, persist = true, force = false) {
+  const resolvedLanguage = SUPPORTED_LANGUAGES.includes(nextLanguage) ? nextLanguage : "en";
+  if (!force && resolvedLanguage === currentLanguage) {
+    updateLanguageControls();
+    return;
+  }
+
+  currentLanguage = resolvedLanguage;
   applyStaticTranslations();
   window.dispatchEvent(new Event("languagechange"));
   updateLanguageControls();
@@ -453,12 +520,12 @@ function setLanguage(nextLanguage, persist = true) {
   loadShowcaseProjects();
 
   if (persist) {
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    setStoredValue(LANGUAGE_STORAGE_KEY, currentLanguage);
   }
 }
 
 function detectInitialLanguage() {
-  const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  const storedLanguage = getStoredValue(LANGUAGE_STORAGE_KEY);
   if (SUPPORTED_LANGUAGES.includes(storedLanguage)) {
     return storedLanguage;
   }
@@ -479,7 +546,7 @@ function initLanguageSwitcher() {
     });
   });
 
-  setLanguage(detectInitialLanguage(), false);
+  setLanguage(detectInitialLanguage(), false, true);
 }
 
 function initSectionNavState() {
@@ -500,6 +567,7 @@ function initSectionNavState() {
   }
 
   const sectionVisibility = new Map(sections.map((section) => [section.id, 0]));
+  let activeSectionId = sections[0].id;
 
   const readCssNumber = (name, fallback) => {
     const value = Number.parseFloat(window.getComputedStyle(nav).getPropertyValue(name));
@@ -542,12 +610,17 @@ function initSectionNavState() {
   };
 
   const applyActiveLink = (sectionId) => {
+    activeSectionId = sectionId;
     let activeLink = null;
 
     navLinks.forEach((link) => {
       const isCurrent = link.getAttribute("href") === `#${sectionId}`;
       link.classList.toggle("is-current", isCurrent);
-      link.setAttribute("aria-current", isCurrent ? "page" : "false");
+      if (isCurrent) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
 
       if (isCurrent) {
         activeLink = link;
@@ -555,6 +628,21 @@ function initSectionNavState() {
     });
 
     moveIndicator(activeLink, false);
+  };
+
+  const clamp01 = (value) => Math.max(0, Math.min(1, value));
+
+  const updateSectionProgress = () => {
+    const activeSection = sections.find((section) => section.id === activeSectionId);
+    if (!activeSection) {
+      nav.style.setProperty("--section-progress", "0");
+      return;
+    }
+
+    const rect = activeSection.getBoundingClientRect();
+    const viewportAnchor = window.innerHeight * 0.55;
+    const progress = clamp01((viewportAnchor - rect.top) / Math.max(rect.height, 1));
+    nav.style.setProperty("--section-progress", progress.toFixed(3));
   };
 
   let alignRaf = 0;
@@ -585,6 +673,7 @@ function initSectionNavState() {
     });
 
     applyActiveLink(bestSectionId);
+    updateSectionProgress();
   }, {
     rootMargin: "-35% 0px -45% 0px",
     threshold: [0, 0.25, 0.5, 0.75, 1],
@@ -598,13 +687,30 @@ function initSectionNavState() {
   } else {
     applyActiveLink(sections[0].id);
   }
+  updateSectionProgress();
 
   window.addEventListener("resize", () => {
     realignIndicator(true);
+    updateSectionProgress();
   }, { passive: true });
+
+  let progressTicking = false;
+  const requestProgressUpdate = () => {
+    if (progressTicking) {
+      return;
+    }
+    progressTicking = true;
+    window.requestAnimationFrame(() => {
+      updateSectionProgress();
+      progressTicking = false;
+    });
+  };
+
+  window.addEventListener("scroll", requestProgressUpdate, { passive: true });
 
   window.addEventListener("languagechange", () => {
     realignIndicator(true);
+    updateSectionProgress();
   });
 
   if (typeof ResizeObserver === "function") {
@@ -617,6 +723,7 @@ function initSectionNavState() {
 
   const textObserver = new MutationObserver(() => {
     realignIndicator(true);
+    updateSectionProgress();
   });
 
   textObserver.observe(nav, {
@@ -628,28 +735,36 @@ function initSectionNavState() {
   if (document.fonts?.ready) {
     document.fonts.ready.then(() => {
       realignIndicator(true);
+      updateSectionProgress();
     }).catch(() => {});
   }
 
   if (document.fonts?.addEventListener) {
     document.fonts.addEventListener("loadingdone", () => {
       realignIndicator(true);
+      updateSectionProgress();
     });
   }
 }
 
 function observeReveals() {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const elements = document.querySelectorAll(".reveal");
+
+  if (prefersReducedMotion) {
+    elements.forEach((element) => element.classList.add("is-visible"));
+    return;
+  }
+
   if (revealObserver) {
     revealObserver.disconnect();
   }
 
-  const elements = document.querySelectorAll(".reveal");
   revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("is-visible");
-      } else {
-        entry.target.classList.remove("is-visible");
+        revealObserver?.unobserve(entry.target);
       }
     });
   }, { threshold: 0.15 });
@@ -661,9 +776,10 @@ function initLiquidCursor() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const isHighContrast = window.matchMedia("(forced-colors: active)").matches;
-  const isCursorDisabledByUser = window.localStorage.getItem("disableCustomCursor") === "true";
+  const isCursorDisabledByUser = getStoredValue("disableCustomCursor") === "true";
+  const isSaveDataEnabled = window.navigator.connection?.saveData === true;
 
-  if (prefersReducedMotion || !hasFinePointer || isHighContrast || isCursorDisabledByUser) {
+  if (prefersReducedMotion || !hasFinePointer || isHighContrast || isCursorDisabledByUser || isSaveDataEnabled) {
     return;
   }
 
@@ -802,6 +918,20 @@ function initLiquidCursor() {
   });
 }
 
-initLanguageSwitcher();
-initSectionNavState();
-initLiquidCursor();
+function initApp() {
+  initLanguageSwitcher();
+  initSectionNavState();
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(() => {
+      initLiquidCursor();
+    }, { timeout: 900 });
+  } else {
+    window.setTimeout(initLiquidCursor, 1);
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp, { once: true });
+} else {
+  initApp();
+}
