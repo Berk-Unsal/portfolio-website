@@ -177,14 +177,10 @@ section {
 }
 
 .nav {
-  --nav-indicator-bleed-x: 9;
-  --nav-indicator-bleed-y: 5;
-  --nav-indicator-min-width: 54;
-  --nav-indicator-min-height: 38;
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 4px;
   color: var(--muted);
   padding: 5px;
   border-radius: 999px;
@@ -222,16 +218,12 @@ section {
   z-index: 1;
   min-height: 34px;
   white-space: nowrap;
-  padding: 6px 15px;
+  padding: 6px 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
   transition: color 220ms ease;
-}
-
-.nav-link + .nav-link {
-  border-left: 1px solid rgba(17, 17, 17, 0.1);
 }
 
 .nav a:hover {
@@ -247,8 +239,8 @@ section {
   position: absolute;
   left: 0;
   top: 0;
-  width: calc(var(--nav-indicator-min-width) * 1px);
-  height: calc(var(--nav-indicator-min-height) * 1px);
+  width: 1px;
+  height: 1px;
   border-radius: 999px;
   pointer-events: none;
   opacity: 0;
@@ -556,14 +548,20 @@ main {
   background: linear-gradient(90deg, var(--bg) 0%, transparent 15%, transparent 85%, var(--bg) 100%);
   position: relative;
   z-index: 1;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.skills-carousel-container.is-dragging {
+  cursor: grabbing;
 }
 
 .skills-carousel-track {
   display: flex;
   gap: 24px;
   padding: 28px 24px;
-  animation: scroll-carousel 60s linear infinite;
   will-change: transform;
+  user-select: none;
 }
 
 .skills-carousel-item {
@@ -608,15 +606,6 @@ main {
   text-align: center;
   white-space: nowrap;
   text-transform: capitalize;
-}
-
-@keyframes scroll-carousel {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 .about-card,
@@ -999,19 +988,9 @@ main {
     grid-column: 1 / -1;
   }
 
-  .nav {
-    gap: 0;
-  }
-
   .nav-link {
     padding: 6px 12px;
     min-height: 32px;
-  }
-
-  .nav {
-    --nav-indicator-bleed-x: 8;
-    --nav-indicator-min-width: 50;
-    --nav-indicator-min-height: 36;
   }
 }
 
@@ -1075,7 +1054,7 @@ main {
 
   .skills-carousel-container {
     margin: 24px 0;
-    padding: 0 -16px;
+    border-radius: 20px;
   }
 
   .skills-carousel-track {

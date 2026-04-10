@@ -584,11 +584,6 @@ function initSectionNavState() {
   const sectionVisibility = new Map(sections.map((section) => [section.id, 0]));
   let activeSectionId = sections[0].id;
 
-  const readCssNumber = (name, fallback) => {
-    const value = Number.parseFloat(window.getComputedStyle(nav).getPropertyValue(name));
-    return Number.isFinite(value) ? value : fallback;
-  };
-
   const getActiveLink = () => navLinks.find((link) => link.classList.contains("is-current"));
 
   const moveIndicator = (link, immediate = false) => {
@@ -601,12 +596,8 @@ function initSectionNavState() {
     const linkRect = link.getBoundingClientRect();
     const centerX = linkRect.left - navRect.left + linkRect.width / 2;
     const centerY = linkRect.top - navRect.top + linkRect.height / 2;
-    const bleedX = readCssNumber("--nav-indicator-bleed-x", 9);
-    const bleedY = readCssNumber("--nav-indicator-bleed-y", 5);
-    const minWidth = readCssNumber("--nav-indicator-min-width", 54);
-    const minHeight = readCssNumber("--nav-indicator-min-height", 38);
-    const width = Math.max(linkRect.width + (bleedX * 2), minWidth);
-    const height = Math.max(linkRect.height + (bleedY * 2), minHeight);
+    const width = Math.max(linkRect.width - 1, 1);
+    const height = Math.max(linkRect.height - 1, 1);
 
     if (immediate) {
       indicator.classList.add("is-instant");
@@ -934,8 +925,9 @@ function initLiquidCursor() {
 }
 
 function populateCarousel() {
+  const container = document.getElementById("skills-carousel-container");
   const carousel = document.getElementById("skills-carousel");
-  if (!carousel) {
+  if (!container || !carousel || carousel.dataset.initialized === "true") {
     return;
   }
 
@@ -955,6 +947,7 @@ function populateCarousel() {
       img.alt = skill.label;
       img.loading = "lazy";
       img.decoding = "async";
+      img.draggable = false;
 
       iconContainer.appendChild(img);
 
@@ -970,6 +963,135 @@ function populateCarousel() {
   }
 
   carousel.appendChild(fragment);
+  carousel.dataset.initialized = "true";
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const baseSpeed = -28;
+  const minSpeed = 10;
+  const maxSpeed = 120;
+
+  let offsetX = 0;
+  let halfTrackWidth = 1;
+  let lastTime = performance.now();
+  let dragging = false;
+  let dragLastClientX = 0;
+  let dragLastTime = performance.now();
+  let currentSpeed = baseSpeed;
+  let targetSpeed = baseSpeed;
+
+  const enforceSpeedBounds = (speed, directionHint = baseSpeed) => {
+    const hintedDirection = Math.sign(directionHint) || -1;
+    const direction = Math.sign(speed) || hintedDirection;
+    const boundedMagnitude = Math.min(maxSpeed, Math.max(minSpeed, Math.abs(speed)));
+    return direction * boundedMagnitude;
+  };
+
+  const clampOffset = () => {
+    while (offsetX <= -halfTrackWidth) {
+      offsetX += halfTrackWidth;
+    }
+    while (offsetX > 0) {
+      offsetX -= halfTrackWidth;
+    }
+  };
+
+  const applyOffset = () => {
+    carousel.style.transform = `translate3d(${offsetX}px, 0, 0)`;
+  };
+
+  const recalcTrackWidth = () => {
+    halfTrackWidth = Math.max(carousel.scrollWidth / 2, 1);
+    clampOffset();
+    applyOffset();
+  };
+
+  const animationFrame = (now) => {
+    const deltaSeconds = (now - lastTime) / 1000;
+    lastTime = now;
+
+    if (!prefersReducedMotion && !document.hidden) {
+      if (!dragging) {
+        // Ease back toward baseline speed after interaction, while keeping limits.
+        targetSpeed += (baseSpeed - targetSpeed) * Math.min(1, deltaSeconds * 0.9);
+      }
+
+      currentSpeed += (targetSpeed - currentSpeed) * Math.min(1, deltaSeconds * 7);
+      currentSpeed = enforceSpeedBounds(currentSpeed, baseSpeed);
+
+      offsetX += currentSpeed * deltaSeconds;
+      clampOffset();
+      applyOffset();
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  };
+
+  recalcTrackWidth();
+  window.requestAnimationFrame(animationFrame);
+
+  window.addEventListener("resize", recalcTrackWidth, { passive: true });
+
+  container.addEventListener("pointerdown", (event) => {
+    dragging = true;
+    dragLastClientX = event.clientX;
+    dragLastTime = performance.now();
+    container.classList.add("is-dragging");
+    try {
+      container.setPointerCapture(event.pointerId);
+    } catch {
+      // Ignore unsupported pointer capture edge cases.
+    }
+  });
+
+  container.addEventListener("pointermove", (event) => {
+    if (!dragging) {
+      return;
+    }
+
+    const deltaX = event.clientX - dragLastClientX;
+    const now = performance.now();
+    const deltaSeconds = Math.max((now - dragLastTime) / 1000, 0.001);
+    dragLastClientX = event.clientX;
+    dragLastTime = now;
+
+    offsetX += deltaX;
+    clampOffset();
+    applyOffset();
+
+    // Translate drag gesture into speed change so interaction has persistent meaning.
+    const gestureSpeed = deltaX / deltaSeconds;
+    targetSpeed = enforceSpeedBounds(gestureSpeed, currentSpeed);
+  });
+
+  const stopDragging = () => {
+    if (!dragging) {
+      return;
+    }
+    dragging = false;
+    container.classList.remove("is-dragging");
+    targetSpeed = enforceSpeedBounds(currentSpeed, baseSpeed);
+  };
+
+  container.addEventListener("pointerup", stopDragging);
+  container.addEventListener("pointercancel", stopDragging);
+  container.addEventListener("pointerleave", stopDragging);
+
+  container.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+      return;
+    }
+
+    event.preventDefault();
+    const speedDelta = 16;
+    const nextSpeed = event.key === "ArrowRight"
+      ? targetSpeed - speedDelta
+      : targetSpeed + speedDelta;
+    targetSpeed = enforceSpeedBounds(nextSpeed, targetSpeed);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    lastTime = performance.now();
+  });
 }
 
 function initApp() {
