@@ -134,6 +134,45 @@
           <a class="button button-primary" id="contact-back-to-top" href="#hero">Back to top</a>
         </div>
       </section>
+
+      <section class="section cv-request reveal" id="cv-request">
+        <div class="cv-request-card glass">
+          <div class="cv-request-intro">
+            <p class="eyebrow" id="cv-eyebrow">Request my CV</p>
+            <h2 id="cv-heading">Need my full CV for a role or collaboration?</h2>
+            <p id="cv-body">Share a few details below and I will send it to your email.</p>
+          </div>
+
+          <form class="cv-request-form" id="cv-request-form" action="https://formspree.io/f/xgopgkad" method="POST">
+            <input type="hidden" name="_subject" value="CV request from portfolio" />
+            <input type="hidden" name="_next" value="/success.html" />
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+
+            <div class="field-group">
+              <label for="cv-name" id="cv-label-name">Name</label>
+              <input id="cv-name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+            </div>
+
+            <div class="field-group">
+              <label for="cv-company" id="cv-label-company">Company/Organization</label>
+              <input id="cv-company" name="company" type="text" autocomplete="organization" required placeholder="Company or organization" />
+            </div>
+
+            <div class="field-group field-group-email">
+              <label for="cv-email" id="cv-label-email">Email</label>
+              <input id="cv-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+            </div>
+
+            <div class="field-group field-group-full">
+              <label for="cv-message" id="cv-label-message">Message</label>
+              <textarea id="cv-message" name="message" rows="5" required placeholder="Tell me why you want my CV and any role context."></textarea>
+            </div>
+
+            <button class="button button-primary" id="cv-submit" type="submit">Request my CV</button>
+            <p class="cv-form-status" id="cv-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer reveal" aria-label="Social links">

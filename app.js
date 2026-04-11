@@ -53,6 +53,20 @@ const I18N = {
     contactEyebrow: "Contact",
     contactHeading: "Open to cloud and backend opportunities.",
     contactBody: "You can review my repositories and connect with me through the social links below.",
+    cvEyebrow: "Request my CV",
+    cvHeading: "Need my full CV for a role or collaboration?",
+    cvBody: "Share a few details below and I will send it to your email.",
+    cvLabelName: "Name",
+    cvLabelCompany: "Company/Organization",
+    cvLabelEmail: "Email",
+    cvLabelMessage: "Message",
+    cvPlaceholderName: "Your name",
+    cvPlaceholderCompany: "Company or organization",
+    cvPlaceholderEmail: "you@company.com",
+    cvPlaceholderMessage: "Tell me why you want my CV and any role context.",
+    cvSubmit: "Request my CV",
+    cvSubmitting: "Submitting your request...",
+    cvSubmitError: "Submission failed. Please try again or reach out via social links.",
     backToTop: "Back to top",
     footerCopy: "Connect with me",
     showcaseBadge: "Showcase project",
@@ -106,6 +120,20 @@ const I18N = {
     contactEyebrow: "İletişim",
     contactHeading: "Bulut ve backend fırsatlarına açığım.",
     contactBody: "Depolarımı inceleyebilir ve aşağıdaki sosyal bağlantılardan bana ulaşabilirsiniz.",
+    cvEyebrow: "CV Talebi",
+    cvHeading: "Bir pozisyon veya iş birliği için detaylı CV mi istiyor musunuz?",
+    cvBody: "Aşağıdaki formu doldurun, CV mi e-posta ile paylaşayım.",
+    cvLabelName: "Ad Soyad",
+    cvLabelCompany: "Şirket/Kurum",
+    cvLabelEmail: "E-posta",
+    cvLabelMessage: "Mesaj",
+    cvPlaceholderName: "Adınız soyadınız",
+    cvPlaceholderCompany: "Şirket veya kurum adı",
+    cvPlaceholderEmail: "ornek@sirket.com",
+    cvPlaceholderMessage: "CV talebinizin nedenini ve varsa rol detayını paylaşın.",
+    cvSubmit: "CV talep et",
+    cvSubmitting: "Talebiniz gonderiliyor...",
+    cvSubmitError: "Gonderim basarisiz oldu. Lutfen tekrar deneyin veya sosyal baglantilardan iletisim kurun.",
     backToTop: "Yukarıya dön",
     footerCopy: "Bana ulaşın",
     showcaseBadge: "Vitrin projesi",
@@ -379,8 +407,28 @@ function applyStaticTranslations() {
   setText("contact-eyebrow", t("contactEyebrow"));
   setText("contact-heading", t("contactHeading"));
   setText("contact-body", t("contactBody"));
+  setText("cv-eyebrow", t("cvEyebrow"));
+  setText("cv-heading", t("cvHeading"));
+  setText("cv-body", t("cvBody"));
+  setText("cv-label-name", t("cvLabelName"));
+  setText("cv-label-company", t("cvLabelCompany"));
+  setText("cv-label-email", t("cvLabelEmail"));
+  setText("cv-label-message", t("cvLabelMessage"));
+  setText("cv-submit", t("cvSubmit"));
   setText("contact-back-to-top", t("backToTop"));
   setText("footer-copy", t("footerCopy"));
+
+  const setPlaceholder = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.setAttribute("placeholder", value);
+    }
+  };
+
+  setPlaceholder("cv-name", t("cvPlaceholderName"));
+  setPlaceholder("cv-company", t("cvPlaceholderCompany"));
+  setPlaceholder("cv-email", t("cvPlaceholderEmail"));
+  setPlaceholder("cv-message", t("cvPlaceholderMessage"));
 
   document.title = t("pageTitle");
   document.documentElement.lang = currentLanguage;
@@ -1094,7 +1142,63 @@ function populateCarousel() {
   });
 }
 
+function initCvRequestForm() {
+  const form = document.getElementById("cv-request-form");
+  if (!(form instanceof HTMLFormElement)) {
+    return;
+  }
+
+  const submitButton = form.querySelector("#cv-submit");
+  const status = form.querySelector("#cv-form-status");
+  let isSubmitting = false;
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
+    isSubmitting = true;
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+    }
+
+    if (status instanceof HTMLElement) {
+      status.classList.remove("is-error");
+      status.textContent = t("cvSubmitting");
+    }
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method || "POST",
+        body: new FormData(form),
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Formspree submission failed with status ${response.status}`);
+      }
+
+      window.location.assign("success.html");
+    } catch {
+      if (status instanceof HTMLElement) {
+        status.classList.add("is-error");
+        status.textContent = t("cvSubmitError");
+      }
+
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+      }
+      isSubmitting = false;
+    }
+  });
+}
+
 function initApp() {
+  initCvRequestForm();
   populateCarousel();
   initLanguageSwitcher();
   initSectionNavState();

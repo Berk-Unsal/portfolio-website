@@ -880,6 +880,97 @@ main {
   max-width: 46rem;
 }
 
+.cv-request-card {
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: grid;
+  gap: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.7));
+}
+
+.cv-request-intro h2 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.cv-request-intro p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.cv-request-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+.field-group label {
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field-group input,
+.field-group textarea {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.field-group textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  outline: none;
+  border-color: rgba(10, 132, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.field-group-email,
+.field-group-full,
+.cv-request-form .button {
+  grid-column: 1 / -1;
+}
+
+.cv-request-form .button {
+  justify-self: start;
+}
+
+.cv-request-form .button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.cv-form-status {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.cv-form-status.is-error {
+  color: #9b1c1c;
+}
+
 .site-footer {
   width: min(calc(100% - 32px), var(--max-width));
   margin: 8px auto 40px;
@@ -968,6 +1059,10 @@ main {
     align-items: start;
   }
 
+  .cv-request-form {
+    grid-template-columns: 1fr;
+  }
+
   .hero-copy h1 {
     max-width: 9ch;
   }
@@ -1035,7 +1130,8 @@ main {
 
   .about-card,
   .project-card,
-  .contact-card {
+  .contact-card,
+  .cv-request-card {
     border-radius: 22px;
   }
 
@@ -1044,6 +1140,10 @@ main {
   }
 
   .contact-card {
+    padding: 22px;
+  }
+
+  .cv-request-card {
     padding: 22px;
   }
 
