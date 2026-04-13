@@ -1202,13 +1202,6 @@ function initApp() {
   populateCarousel();
   initLanguageSwitcher();
   initSectionNavState();
-  if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(() => {
-      initLiquidCursor();
-    }, { timeout: 900 });
-  } else {
-    window.setTimeout(initLiquidCursor, 1);
-  }
 }
 
 if (document.readyState === "loading") {

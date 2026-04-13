@@ -39,14 +39,6 @@ body {
   overflow-x: hidden;
 }
 
-body.cursor-enhanced,
-body.cursor-enhanced a,
-body.cursor-enhanced button,
-body.cursor-enhanced .button,
-body.cursor-enhanced .social-link {
-  cursor: none;
-}
-
 body::before {
   content: "";
   position: fixed;
@@ -55,38 +47,6 @@ body::before {
   background-image: linear-gradient(rgba(17, 17, 17, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(17, 17, 17, 0.025) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
-}
-
-.liquid-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate3d(-50%, -50%, 0);
-  z-index: 999;
-}
-
-.liquid-cursor {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  background: radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(10px) saturate(130%);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  transition: opacity 120ms ease, width 170ms ease, height 170ms ease, border-color 170ms ease;
-}
-
-.liquid-cursor.is-active {
-  width: 44px;
-  height: 44px;
-  border-color: rgba(255, 255, 255, 0.68);
-}
-
-.liquid-cursor.is-pressed {
-  width: 28px;
-  height: 28px;
 }
 
 a {
@@ -1029,13 +989,6 @@ main {
   object-fit: contain;
 }
 
-.cursor-magnify-target {
-  transform: scale(1.04);
-  transform-origin: center;
-  filter: saturate(1.04) contrast(1.02);
-  transition: transform 140ms ease, filter 140ms ease;
-}
-
 .reveal {
   opacity: 0;
   transform: translateY(36px);
@@ -1211,15 +1164,6 @@ main {
   .reveal {
     filter: none;
     transition-delay: 0ms;
-  }
-
-  .cursor-magnify-target {
-    transform: none;
-    filter: none;
-  }
-
-  .liquid-cursor {
-    display: none;
   }
 
   .nav-indicator {
