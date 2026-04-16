@@ -72,6 +72,9 @@ const I18N = {
     showcaseBadge: "Showcase project",
     updated: "Updated",
     viewRepo: "View repo",
+    viewDemo: "View demo",
+    watchDemo: "Watch demo",
+    viewPr: "View PR",
     rolePrefix: "Role",
     outcomePrefix: "Outcome",
     labelFallback: "Label",
@@ -139,6 +142,9 @@ const I18N = {
     showcaseBadge: "Vitrin projesi",
     updated: "Güncellendi",
     viewRepo: "Repoyu gör",
+    viewDemo: "Demoyu gör",
+    watchDemo: "Demoyu izle",
+    viewPr: "PR\"ı gör",
     rolePrefix: "Rol",
     outcomePrefix: "Çıktı",
     labelFallback: "Etiket",
@@ -177,6 +183,8 @@ const SHOWCASE_PROJECTS = [
     updatedAt: "2026-04-01",
     visibility: "public",
     url: "https://github.com/Berk-Unsal/OpsCommand",
+    demoUrl: "https://berk-unsal.github.io/OpsCommand/docs/",
+    demoVideoUrl: "assets/demo-videos/OpsCommand-Demo Video.mp4",
   },
   {
     name: "Python Algorithmic Trading Bot",
@@ -225,6 +233,7 @@ const SHOWCASE_PROJECTS = [
     updatedAt: "2026-04-01",
     visibility: "public",
     url: "https://github.com/crossplane-contrib/crossview",
+    prUrl: "https://github.com/crossplane-contrib/crossview/pull/205",
   },
   {
     name: "url health sentinel",
@@ -303,8 +312,22 @@ const EXPERIENCE_ITEMS = [
 
 const projectsGrid = document.getElementById("projects-grid");
 const experienceGrid = document.getElementById("experience-grid");
+const videoModal = document.getElementById("video-modal");
+const videoModalClose = document.getElementById("video-modal-close");
 let revealObserver = null;
 let currentLanguage = "en";
+
+if (videoModalClose) {
+  videoModalClose.addEventListener("click", closeVideoModal);
+}
+
+if (videoModal) {
+  videoModal.addEventListener("click", (e) => {
+    if (e.target === videoModal) {
+      closeVideoModal();
+    }
+  });
+}
 const dateFormatterByLanguage = new Map();
 
 function getStoredValue(key) {
@@ -325,6 +348,30 @@ function setStoredValue(key, value) {
 
 function t(key) {
   return I18N[currentLanguage]?.[key] ?? I18N.en[key] ?? key;
+}
+
+function openVideoModal(videoUrl) {
+  const modal = document.getElementById("video-modal");
+  const videoSource = document.getElementById("video-source");
+  const videoPlayer = document.getElementById("video-player");
+  
+  if (modal && videoSource && videoPlayer) {
+    videoSource.src = videoUrl;
+    videoPlayer.load();
+    modal.style.display = "flex";
+    videoPlayer.play();
+  }
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById("video-modal");
+  const videoPlayer = document.getElementById("video-player");
+  
+  if (modal && videoPlayer) {
+    modal.style.display = "none";
+    videoPlayer.pause();
+    videoPlayer.currentTime = 0;
+  }
 }
 
 function getLocalizedField(field) {
@@ -503,6 +550,35 @@ function buildProjectCard(project, index) {
   repoLink.rel = "noreferrer";
   repoLink.textContent = t("viewRepo");
   links.appendChild(repoLink);
+
+  if (project.demoUrl) {
+    const demoLink = document.createElement("a");
+    demoLink.href = project.demoUrl;
+    demoLink.target = "_blank";
+    demoLink.rel = "noreferrer";
+    demoLink.textContent = t("viewDemo");
+    links.appendChild(demoLink);
+  }
+
+  if (project.prUrl) {
+    const prLink = document.createElement("a");
+    prLink.href = project.prUrl;
+    prLink.target = "_blank";
+    prLink.rel = "noreferrer";
+    prLink.textContent = t("viewPr");
+    links.appendChild(prLink);
+  }
+
+  if (project.demoVideoUrl) {
+    const watchDemoButton = document.createElement("button");
+    watchDemoButton.type = "button";
+    watchDemoButton.className = "project-link-button";
+    watchDemoButton.textContent = t("watchDemo");
+    watchDemoButton.addEventListener("click", () => {
+      openVideoModal(project.demoVideoUrl);
+    });
+    links.appendChild(watchDemoButton);
+  }
 
   card.append(image, header, description, meta, labelsRow, highlights, links);
 
