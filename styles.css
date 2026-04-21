@@ -617,6 +617,12 @@ main {
   color: var(--muted);
 }
 
+.experience-company a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 .experience-period,
 .experience-highlights-title {
   font-size: 0.92rem;

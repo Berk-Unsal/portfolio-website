@@ -268,6 +268,7 @@ const EXPERIENCE_ITEMS = [
       tr: "Bulut Mühendisliği Stajyeri",
     },
     company: "Better Life Communication",
+    companyUrl: "https://www.blc-css.com/",
     period: {
       en: "Jan 2026 - Feb 2026",
       tr: "Oca 2026 - Şub 2026",
@@ -291,6 +292,7 @@ const EXPERIENCE_ITEMS = [
       tr: "Backend Mühendisliği Stajyeri",
     },
     company: "Tüzün Kardeşler A.Ş.",
+    companyUrl: "https://www.tuzunkardesler.com.tr/",
     period: {
       en: "Jun 2024 - Sep 2024",
       tr: "Haz 2024 - Eyl 2024",
@@ -595,7 +597,19 @@ function buildExperienceCard(item, index) {
 
   appendTextElement(header, "p", "experience-badge", t("experienceBadge"));
   appendTextElement(header, "h3", "experience-title", getLocalizedField(item.role));
-  appendTextElement(header, "p", "experience-company", item.company);
+  const company = document.createElement("p");
+  company.className = "experience-company";
+  if (item.companyUrl) {
+    const companyLink = document.createElement("a");
+    companyLink.href = item.companyUrl;
+    companyLink.target = "_blank";
+    companyLink.rel = "noreferrer";
+    companyLink.textContent = item.company;
+    company.appendChild(companyLink);
+  } else {
+    company.textContent = item.company;
+  }
+  header.appendChild(company);
   appendTextElement(header, "p", "experience-period", getLocalizedField(item.period));
 
   const highlightsTitle = appendTextElement(card, "p", "experience-highlights-title", t("experienceHighlightsTitle"));
