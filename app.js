@@ -183,8 +183,32 @@ const SHOWCASE_PROJECTS = [
     updatedAt: "2026-04-01",
     visibility: "public",
     url: "https://github.com/Berk-Unsal/OpsCommand",
-    demoUrl: "https://berk-unsal.github.io/OpsCommand/docs/",
     demoVideoUrl: "assets/demo-videos/OpsCommand-Demo Video.mp4",
+  },
+  {
+    name: "Interactable Injury Informer",
+    description: {
+      en: "A web app that allows users to interact with an anatomy diagram to learn about potential injuries in different muscle groups.",
+      tr: "Kullanıcıların çeşitli kas gruplarındaki olası yaralanmaları öğrenmek için anatomi şemasıyla etkileşime girmesini sağlayan bir web uygulaması.",
+    },
+    thumbnail: "assets/injury-finder.png",
+    labels: {
+      en: ["React", "Interactive", "Web App"],
+      tr: ["React", "İnteraktif", "Web App"],
+    },
+    role: {
+      en: "Developer",
+      tr: "Geliştirici",
+    },
+    outcome: {
+      en: "Interactive medical exploration tool",
+      tr: "Etkileşimli tıbbi keşif aracı",
+    },
+    language: "JavaScript",
+    updatedAt: "2026-04-25",
+    visibility: "public",
+    url: "https://github.com/Berk-Unsal/Interactable-Injury-Informer",
+    demoUrl: "https://injury-finder-by-berkunsal.netlify.app/",
   },
   {
     name: "Python Algorithmic Trading Bot",
@@ -655,7 +679,8 @@ function loadShowcaseProjects() {
 
   projectsGrid.appendChild(fragment);
 
-  observeReveals();
+  // Defer observing until DOM has painted and layout is stable
+  setTimeout(observeReveals, 100);
 }
 
 function setLanguage(nextLanguage, persist = true, force = false) {
@@ -906,14 +931,28 @@ function observeReveals() {
 
   revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting || entry.intersectionRatio > 0) {
         entry.target.classList.add("is-visible");
         revealObserver?.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0, rootMargin: "50px" });
 
-  elements.forEach((element) => revealObserver.observe(element));
+  // Use setTimeout to ensure the initial `opacity: 0` state is painted by the browser
+  // before the IntersectionObserver fires and adds `.is-visible`. This restores the CSS transition.
+  setTimeout(() => {
+    elements.forEach((element) => revealObserver.observe(element));
+  }, 50);
+
+  // Fallback: forcefully show elements after a short delay to prevent them from never rendering
+  setTimeout(() => {
+    elements.forEach((element) => {
+      if (!element.classList.contains("is-visible")) {
+        element.classList.add("is-visible");
+        revealObserver?.unobserve(element);
+      }
+    });
+  }, 1500);
 }
 
 function initLiquidCursor() {
