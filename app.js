@@ -1,5 +1,11 @@
 const LANGUAGE_STORAGE_KEY = "siteLanguage";
+const THEME_STORAGE_KEY = "siteTheme";
 const SUPPORTED_LANGUAGES = ["en", "tr"];
+const SUPPORTED_THEMES = ["light", "dark"];
+const THEME_COLORS = {
+  light: "#f5f5f2",
+  dark: "#0d0f12",
+};
 
 const SKILLS = [
   { name: "aws", label: "AWS" },
@@ -22,6 +28,10 @@ const I18N = {
     navExperience: "Experience",
     navProjects: "Projects",
     navContact: "Contact",
+    themeDark: "Dark",
+    themeLight: "Light",
+    themeToggleDark: "Switch to dark mode",
+    themeToggleLight: "Switch to light mode",
     heroEyebrow: "Portfolio",
     heroLede: "Computer Engineering student focused on cloud-native systems and backend development. I build scalable, fault-tolerant infrastructure with Kubernetes, OpenStack, and CI/CD pipelines.",
     heroViewProjects: "View projects",
@@ -91,6 +101,10 @@ const I18N = {
     navExperience: "Deneyim",
     navProjects: "Projeler",
     navContact: "İletişim",
+    themeDark: "Karanlık",
+    themeLight: "Aydınlık",
+    themeToggleDark: "Karanlık moda geç",
+    themeToggleLight: "Aydınlık moda geç",
     heroEyebrow: "Portföy",
     heroLede: "Bulut-yerel sistemler ve backend geliştirme odaklı bir Bilgisayar Mühendisliği öğrencisiyim. Kubernetes, OpenStack ve CI/CD hatlarıyla ölçeklenebilir, hataya dayanıklı altyapılar geliştiriyorum.",
     heroViewProjects: "Projeleri gör",
@@ -342,6 +356,7 @@ const videoModal = document.getElementById("video-modal");
 const videoModalClose = document.getElementById("video-modal-close");
 let revealObserver = null;
 let currentLanguage = "en";
+let currentTheme = "light";
 
 if (videoModalClose) {
   videoModalClose.addEventListener("click", closeVideoModal);
@@ -370,6 +385,51 @@ function setStoredValue(key, value) {
   } catch {
     // Ignore storage failures (private mode or blocked storage).
   }
+}
+
+function updateThemeToggle() {
+  const toggleButton = document.getElementById("theme-toggle");
+  if (!toggleButton) {
+    return;
+  }
+
+  const isDark = currentTheme === "dark";
+  toggleButton.textContent = isDark ? t("themeLight") : t("themeDark");
+  toggleButton.setAttribute("aria-label", isDark ? t("themeToggleLight") : t("themeToggleDark"));
+  toggleButton.setAttribute("aria-pressed", isDark ? "true" : "false");
+}
+
+function applyTheme(nextTheme, persist = true, force = false) {
+  const resolvedTheme = SUPPORTED_THEMES.includes(nextTheme) ? nextTheme : "light";
+  if (!force && resolvedTheme === currentTheme) {
+    updateThemeToggle();
+    return;
+  }
+
+  currentTheme = resolvedTheme;
+  document.documentElement.dataset.theme = resolvedTheme;
+
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeMeta) {
+    themeMeta.setAttribute("content", THEME_COLORS[resolvedTheme] || THEME_COLORS.light);
+  }
+
+  updateThemeToggle();
+
+  if (persist) {
+    setStoredValue(THEME_STORAGE_KEY, resolvedTheme);
+  }
+}
+
+function detectInitialTheme() {
+  const storedTheme = getStoredValue(THEME_STORAGE_KEY);
+  if (SUPPORTED_THEMES.includes(storedTheme)) {
+    return storedTheme;
+  }
+
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 function t(key) {
@@ -509,6 +569,8 @@ function applyStaticTranslations() {
   if (descriptionMeta) {
     descriptionMeta.setAttribute("content", t("pageDescription"));
   }
+
+  updateThemeToggle();
 }
 
 function buildProjectCard(project, index) {
@@ -743,6 +805,37 @@ function initLanguageSwitcher() {
   });
 
   setLanguage(detectInitialLanguage(), false, true);
+}
+
+function initThemeToggle() {
+  const toggleButton = document.getElementById("theme-toggle");
+  if (!toggleButton) {
+    applyTheme(detectInitialTheme(), false, true);
+    return;
+  }
+
+  toggleButton.addEventListener("click", () => {
+    applyTheme(currentTheme === "dark" ? "light" : "dark", true);
+  });
+
+  const prefersDark = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  if (prefersDark) {
+    const handlePreferenceChange = (event) => {
+      const storedTheme = getStoredValue(THEME_STORAGE_KEY);
+      if (storedTheme) {
+        return;
+      }
+      applyTheme(event.matches ? "dark" : "light", false);
+    };
+
+    if (typeof prefersDark.addEventListener === "function") {
+      prefersDark.addEventListener("change", handlePreferenceChange);
+    } else if (typeof prefersDark.addListener === "function") {
+      prefersDark.addListener(handlePreferenceChange);
+    }
+  }
+
+  applyTheme(detectInitialTheme(), false, true);
 }
 
 function initSectionNavState() {
@@ -1347,6 +1440,7 @@ function initCvRequestForm() {
 function initApp() {
   initCvRequestForm();
   populateCarousel();
+  initThemeToggle();
   initLanguageSwitcher();
   initSectionNavState();
 }
